@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from src.auth.base_config import auth_backend, fastapi_users
 from src.auth.schemas import UserRead, UserCreate
+from src.tasks.router import router as router_task
 
 app = FastAPI(
     title="Task Manager"
@@ -23,3 +24,5 @@ app.include_router(
     prefix="/auth",
     tags=["Auth"],
 )
+
+app.include_router(router_task)

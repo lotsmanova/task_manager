@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from fastapi_mail import ConnectionConfig
 
+
 load_dotenv()
 
 DB_HOST = os.environ.get("DB_HOST")
@@ -30,3 +31,5 @@ conf = ConnectionConfig(
     USE_CREDENTIALS=True,
     VALIDATE_CERTS=True
 )
+
+
