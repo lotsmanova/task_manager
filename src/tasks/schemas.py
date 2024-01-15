@@ -10,3 +10,16 @@ class Task(BaseModel):
     description: str
     user_id: int
     date_create: datetime
+
+
+class TaskAdd(BaseModel):
+
+    title: str
+    description: str
+    user_id: int
+
+
+class TaskEdit(BaseModel):
+
+    title: str
+    description: str
