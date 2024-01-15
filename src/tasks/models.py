@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy import ForeignKey, BigInteger
 from sqlalchemy.orm import Mapped, mapped_column
 from src.database import Base
-from src.tasks.shemas import Task
+from src.tasks.schemas import Task
 
 
 class Tasks(Base):
