@@ -1,4 +1,8 @@
+from typing import Set
+
 from fastapi import APIRouter
+from starlette.websockets import WebSocket, WebSocketDisconnect
+
 from src.dependies import UOWDep, User_ver
 from src.tasks.schemas import TaskAdd, TaskEdit
 from src.tasks.tasks_services import TasksService
@@ -8,6 +12,21 @@ router = APIRouter(
     prefix="/tasks",
     tags=["Task"]
 )
+
+active_connections: Set[WebSocket] = set()
+
+
+@router.websocket("/ws/{client_id}")
+async def websocket_endpoint(client_id: int, websocket: WebSocket):
+    await websocket.accept()
+    active_connections.add(websocket)
+    try:
+        while True:
+            message = await websocket.receive_text()
+            for connection in active_connections:
+                await connection.send_text(f"Client with {client_id} wrote {message}!")
+    except WebSocketDisconnect:
+        active_connections.remove(websocket)
 
 
 @router.post("")
