@@ -17,7 +17,7 @@ active_connections: Set[WebSocket] = set()
 
 
 @router.websocket("/ws/{client_id}")
-async def websocket_endpoint(client_id: int, websocket: WebSocket):
+async def websocket_endpoint(client_id: int, websocket: WebSocket, user: User_ver):
     await websocket.accept()
     active_connections.add(websocket)
     try:
