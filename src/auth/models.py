@@ -5,6 +5,7 @@ from src.database import Base
 
 
 class User(SQLAlchemyBaseUserTable[int], Base):
+    """Модель пользователя для БД"""
     __tablename__ = "user"
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, index=True)
