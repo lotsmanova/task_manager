@@ -4,6 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class AbstractRepository(ABC):
+    """Абстрактный класс репозитория"""
+
     @abstractmethod
     async def add_one(self, data: dict) -> int:
         raise NotImplementedError
@@ -26,6 +28,8 @@ class AbstractRepository(ABC):
 
 
 class SQLAlchemyRepository(AbstractRepository):
+    """Класс репозитория для SQLAlchemy"""
+
     model = None
 
     def __init__(self, session: AsyncSession):
