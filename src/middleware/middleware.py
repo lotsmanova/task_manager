@@ -12,6 +12,8 @@ logger.addHandler(handler)
 
 
 async def logging_middleware(request: Request, call_next):
+    """Создание логов"""
+
     logger.info(f"Incoming request: {request.method} {request.url.path}")
     response = await call_next(request)
     logger.info(f"Outgoing response code: {response.status_code}")
