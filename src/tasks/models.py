@@ -7,6 +7,8 @@ from src.tasks.schemas import Task
 
 
 class Tasks(Base):
+    """Модель задач"""
+
     STATUS = [
         ('create', 'create'),
         ('process', 'process'),

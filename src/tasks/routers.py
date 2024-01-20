@@ -5,7 +5,7 @@ from starlette.websockets import WebSocket, WebSocketDisconnect
 
 from src.dependies import UOWDep, User_ver
 from src.tasks.schemas import TaskAdd, TaskEdit
-from src.tasks.tasks_services import TasksService
+from src.tasks.services import TasksService
 
 
 router = APIRouter(

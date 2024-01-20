@@ -3,6 +3,8 @@ from src.utils.unitofwork import IUnitOfWork
 
 
 class TasksService:
+    """Класс сервиса задач для реализации CRUD"""
+
     async def add_task(self, uow: IUnitOfWork, task: TaskAdd):
         tasks_dict = task.model_dump()
         async with uow:
