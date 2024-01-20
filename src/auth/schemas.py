@@ -1,6 +1,4 @@
 from typing import Optional
-
-from pydantic import EmailStr
 from fastapi_users import schemas
 
 
