@@ -18,9 +18,11 @@ ecdsa
 email-validator
 exceptiongroup
 fastapi
-fastapi-users==12.1.2
+fastapi-mail
+fastapi-users
 fastapi-users-db-sqlalchemy
 greenlet
+gunicorn
 h11
 httpcore
 httptools
@@ -45,8 +47,8 @@ pydantic-settings
 pydantic_core
 PyJWT
 pytest
-pytest-asyncio
 python-dotenv
+python-jose
 python-multipart
 PyYAML
 requests
@@ -64,4 +66,4 @@ uvicorn
 uvloop
 watchfiles
 websockets
-gunicorn
+pytest-cov
