@@ -3,12 +3,10 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
-
 from src.auth.crud import user_crud
 from src.auth.jwt import create_access_token, get_user_by_token
-from src.auth.models import Users
 from src.auth.schemas import UserRead, UserAdd
-from src.auth.security import get_password_hash, verify_password
+from src.auth.security import verify_password
 from src.database import get_async_session
 
 

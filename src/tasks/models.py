@@ -2,6 +2,7 @@ from datetime import datetime
 from sqlalchemy import ForeignKey, BigInteger
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy_utils import ChoiceType
+from src.auth.models import Users
 from src.database import Base
 from src.tasks.schemas import Task
 

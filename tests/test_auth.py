@@ -11,7 +11,7 @@ def auth_header():
 def test_register():
     # TestCase1 register user
     response = client.post('/auth/register',
-                                json={'username': 'testname', 'email': 'test@mail.ru', 'password': 'testpass'})
+                           json={'username': 'testname', 'email': 'test@mail.ru', 'password': 'testpass'})
     assert response.status_code == 200
 
 
@@ -23,7 +23,7 @@ def test_login():
         "Content-Type": "application/x-www-form-urlencoded",
     }
     response = client.post('/auth/login',
-                                data={'username': 'testname', 'password': 'testpass'}, headers=headers)
+                           data={'username': 'testname', 'password': 'testpass'}, headers=headers)
 
     jwt_token = response.json().get("access_token")
     print(response.json())
@@ -37,4 +37,3 @@ def test_about_me():
 
     response = client.get('/auth/about_me', headers=auth_header())
     assert response.status_code == 200
-
