@@ -16,7 +16,7 @@ class Task(BaseModel):
     title: str
     description: str
     status: TaskStatus
-    user_id: int
+    owner_id: int
     date_create: datetime
 
     @field_validator('status')
@@ -30,7 +30,7 @@ class TaskAdd(BaseModel):
     title: str
     description: str
     status: TaskStatus
-    user_id: int
+    owner_id: int
 
     @field_validator('status')
     def validate_status(cls, value):
@@ -43,6 +43,7 @@ class TaskEdit(BaseModel):
     title: str
     description: str
     status: TaskStatus
+    owner_id: int
 
     @field_validator('status')
     def validate_status(cls, value):
