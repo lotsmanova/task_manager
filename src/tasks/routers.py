@@ -41,7 +41,7 @@ async def add_task(task: TaskAdd, uow: UOWDep, username: str = Depends(get_user_
 
 
 @router.get("")
-async def get_tasks(uow: UOWDep):
+async def get_tasks(uow: UOWDep, username: str = Depends(get_user_by_token)):
     try:
         tasks = await TasksService().get_tasks(uow)
         return tasks

@@ -1,32 +1,29 @@
 version: "3.7"
 
 services:
-  db:
+ db:
     image: postgres:15
-    env_file:
-      - .env-non-dev
-    container_name: db_app
+    container_name: db_tm
     command: -p 1221
     expose:
       - 1221
+    env_file:
+      - .env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
       timeout: 5s
       retries: 5
 
-#    command: -p 1221
-#    expose:
-#      - 1221
-
-  app:
+ app:
     build:
       context: .
+      dockerfile: Dockerfile
     env_file:
-      - .env-non-dev
-    container_name: fastapi_app
-    command: ["/fastapi_app/docker/app.sh"]
+      - .env
+    container_name: app_tm
+    command: ["/app_tm/docker/app.sh"]
     ports:
-      - "9999:8000"
+      - "8000:8000"
     depends_on:
       - db
