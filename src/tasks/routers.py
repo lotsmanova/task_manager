@@ -1,11 +1,11 @@
 from typing import Set
-
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 from starlette.websockets import WebSocket, WebSocketDisconnect
 
-from src.dependies import UOWDep, User_ver
+from src.auth.jwt import get_user_by_token
+from src.dependies import UOWDep
 from src.tasks.schemas import TaskAdd, TaskEdit
-from src.tasks.tasks_services import TasksService
+from src.tasks.services import TasksService
 
 
 router = APIRouter(
@@ -17,7 +17,7 @@ active_connections: Set[WebSocket] = set()
 
 
 @router.websocket("/ws/{client_id}")
-async def websocket_endpoint(client_id: int, websocket: WebSocket, user: User_ver):
+async def websocket_endpoint(client_id: int, websocket: WebSocket):
     await websocket.accept()
     active_connections.add(websocket)
     try:
@@ -30,7 +30,7 @@ async def websocket_endpoint(client_id: int, websocket: WebSocket, user: User_ve
 
 
 @router.post("")
-async def add_task(task: TaskAdd, uow: UOWDep, user: User_ver):
+async def add_task(task: TaskAdd, uow: UOWDep, username: str = Depends(get_user_by_token)):
     try:
         task_id = await TasksService().add_task(uow, task)
         for connection in active_connections:
@@ -41,7 +41,7 @@ async def add_task(task: TaskAdd, uow: UOWDep, user: User_ver):
 
 
 @router.get("")
-async def get_tasks(uow: UOWDep, user: User_ver):
+async def get_tasks(uow: UOWDep):
     try:
         tasks = await TasksService().get_tasks(uow)
         return tasks
@@ -50,7 +50,7 @@ async def get_tasks(uow: UOWDep, user: User_ver):
 
 
 @router.patch("/{id}")
-async def edit_task(id: int, task: TaskEdit, uow: UOWDep, user: User_ver):
+async def edit_task(id: int, task: TaskEdit, uow: UOWDep, username: str = Depends(get_user_by_token)):
     try:
         await TasksService().edit_task(uow, id, task)
         for connection in active_connections:
@@ -61,7 +61,7 @@ async def edit_task(id: int, task: TaskEdit, uow: UOWDep, user: User_ver):
 
 
 @router.get("/{id}")
-async def get_one_task(id: int, uow: UOWDep, user: User_ver):
+async def get_one_task(id: int, uow: UOWDep, username: str = Depends(get_user_by_token)):
     try:
         task = await TasksService().get_one_task(uow, id)
         if task is None:
@@ -72,7 +72,7 @@ async def get_one_task(id: int, uow: UOWDep, user: User_ver):
 
 
 @router.delete("/{id}")
-async def delete_task(id: int, uow: UOWDep, user: User_ver):
+async def delete_task(id: int, uow: UOWDep, username: str = Depends(get_user_by_token)):
     try:
         task = await TasksService().get_one_task(uow, id)
         if not task:

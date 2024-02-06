@@ -1,24 +1,19 @@
-from typing import Optional, List
-from fastapi_users import schemas
 from pydantic import BaseModel, EmailStr
 
 
-class UserRead(schemas.BaseUser[int]):
-    id: int
-    email: str
+class UserAdd(BaseModel):
     username: str
-    is_active: bool = True
-    is_superuser: bool = False
-    is_verified: bool = False
+    email: EmailStr
+    password: str
 
     class Config:
         from_attributes = True
 
 
-class UserCreate(schemas.BaseUserCreate):
+class UserRead(BaseModel):
+    id: int
     username: str
-    email: str
-    password: str
-    is_active: Optional[bool] = True
-    is_superuser: Optional[bool] = False
-    is_verified: Optional[bool] = False
+    email: EmailStr
+
+    class Config:
+        from_attributes = True

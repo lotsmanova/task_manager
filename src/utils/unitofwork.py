@@ -1,10 +1,12 @@
 from abc import ABC, abstractmethod
 from typing import Type
 from src.database import async_session_maker
-from src.tasks.task_repository import TasksRepository
+from src.tasks.repository import TasksRepository
 
 
 class IUnitOfWork(ABC):
+    """Абстрактный класс для реализации паттерна UnitOfWork"""
+
     tasks: Type[TasksRepository]
 
     @abstractmethod
@@ -29,6 +31,8 @@ class IUnitOfWork(ABC):
 
 
 class UnitOfWork:
+    """Класс для реализации паттерна UnitOfWork"""
+
     def __init__(self):
         self.session_factory = async_session_maker
 
