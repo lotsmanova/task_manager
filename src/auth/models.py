@@ -1,5 +1,5 @@
 from sqlalchemy import BigInteger, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database import Base
 
@@ -13,3 +13,4 @@ class Users(Base):
     username: Mapped[str] = mapped_column()
     email: Mapped[str] = mapped_column(unique=True, index=True, nullable=True)
     hashed_password: Mapped[str] = mapped_column()
+    tasks: Mapped[list["Tasks"]] = relationship(back_populates="owner")

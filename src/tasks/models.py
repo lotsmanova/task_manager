@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy import ForeignKey, BigInteger
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy_utils import ChoiceType
 from src.database import Base
 from src.tasks.schemas import Task
@@ -21,8 +21,9 @@ class Tasks(Base):
     title: Mapped[str] = mapped_column()
     description: Mapped[str] = mapped_column()
     status: Mapped[str] = mapped_column(ChoiceType(STATUS), default='create')
-    user_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("user.id", ondelete="CASCADE"), nullable=True)
     date_create: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+    owner_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("user.id"), nullable=True)
+    owner: Mapped["Users"] = relationship(back_populates="tasks")
 
     def to_pydantic_model(self) -> Task:
         return Task(
@@ -30,6 +31,6 @@ class Tasks(Base):
             title=self.title,
             description=self.description,
             status=self.status.value,
-            user_id=self.user_id,
+            owner_id=self.owner_id,
             date_create=self.date_create
         )
